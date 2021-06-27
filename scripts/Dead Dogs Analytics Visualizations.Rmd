@@ -13,3 +13,16 @@ knitr::opts_chunk$set(echo = TRUE, cash = TRUE)
 library(tidyverse)
 library(plotly)
 ```
+
+## Get Data
+```{r}
+file_url <- "https://github.com/asperanz/Dead-Dogs-Analytics-ShinyDashboard/blob/main/data/top10_rank.rda"
+
+url <- "https://github.com/asperanz/Dead-Dogs-Analytics-ShinyDashboard/blob/main/data/top10_rank.rda?raw=true"
+download.file(url, destfile= "/data/top10_rank2.rda", mode = "wb")
+load("/data/top10_rank2.rda")
+
+load(url(file_url))
+
+```
+
