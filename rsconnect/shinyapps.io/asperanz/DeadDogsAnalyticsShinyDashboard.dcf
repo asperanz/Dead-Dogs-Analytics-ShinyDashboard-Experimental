@@ -1,0 +1,13 @@
+name: DeadDogsAnalyticsShinyDashboard
+title: DeadDogsAnalyticsShinyDashboard
+username:
+account: asperanz
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4007546
+bundleId: 4500773
+url: https://asperanz.shinyapps.io/DeadDogsAnalyticsShinyDashboard/
+when: 1619020420.07545
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: app_original.R|README.md|app with 3 files/global.R|app with 3 files/server.R|app with 3 files/ui.R|Area 51

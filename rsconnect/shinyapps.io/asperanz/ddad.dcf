@@ -1,0 +1,14 @@
+name: ddad
+title: ddad
+username:
+account: asperanz
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4007589
+bundleId: 4531749
+url: https://asperanz.shinyapps.io/ddad/
+when: 1619640167.0521
+lastSyncTime: 1619640167.0521
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: app with 3 files/global.R|app with 3 files/server.R|app with 3 files/ui.R|app_mod_old_credentials.R|app_original_old_credentials.R|Area 51/app2/.gitignore|Area 51/app2/app.R|Area 51/app2/global.R|Area 51/app4/app.R|Area 51/app4/global.R|README.md

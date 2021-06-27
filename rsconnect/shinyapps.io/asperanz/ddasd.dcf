@@ -1,0 +1,13 @@
+name: ddasd
+title: ddasd
+username:
+account: asperanz
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3944582
+bundleId: 4481733
+url: https://asperanz.shinyapps.io/ddasd/
+when: 1618606638.25342
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: README.md|3 files/global.R|3 files/server.R|3 files/ui.R|Area 51
