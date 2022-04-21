@@ -1,2 +1,2 @@
-# Dead Dogs Analytics ShinyDashboard Experimental
+# Dead Dogs Analytics ShinyDashboard - Practice & Investigation
 Dead Dogs Analytics Dashboard - Practice & investigation using shinydashboard
