@@ -1,0 +1,245 @@
+---
+title: "Dead Dogs Analytics Visualizations"
+author: "Alessandro Speranza"
+date: "6/27/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cash = TRUE)
+```
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(hrbrthemes)
+library(plotly)
+```
+
+## Get Data
+```{r}
+top10_rank <- readRDS("data/top10_rank.rds")
+top10_rank2 <- readRDS("data/top10_rank2.rds")
+dat_hist_cum <- readRDS("data/playlists_videos_hist_cum.rds")
+```
+
+```{r}
+  ggplot(top10_rank, aes(reorder(x = video_title_plot, video_total_views), y = video_total_views)) +
+  geom_text(aes(label = video_total_views), size = 5, hjust = -0.2, color="black", fontface = "bold") +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  # theme_ipsum_rc() +
+  # scale_color_ipsum() +
+  labs(x = '', 
+       y = "Views",
+       title = "Dead Dogs Songs - Top 10",
+       caption = "Data: Dead Dogs Youtube Channel")
+  # theme_ipsum_rc(grid="XY")
+```
+
+#1
+
+```{r}
+ggplot(top10_rank, aes(x = reorder(video_title_plot, video_total_views), y = video_total_views)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  theme_classic(base_size = 17) +
+  labs(x = '', 
+       y = "Views",
+       title = "Dead Dogs Songs - Top 10",
+       subtitle = "27/07/2016 - 31/12/2020",
+       caption = "Data from Dead Dogs Youtube Channel")
+```
+
+#2
+
+```{r}
+ggplot(top10_rank, aes(x = reorder(video_title_plot, video_total_views), y = video_total_views)) +
+  geom_col() +
+  geom_text(aes(label = video_total_views)) +
+  coord_flip() +
+  theme_ipsum() +
+  scale_color_ipsum() +
+  labs(x = '', 
+       y = "Views",
+       title = "Dead Dogs Songs - Top 10",
+       subtitle = "27/07/2016 - 31/12/2020",
+       caption = "Data: Dead Dogs Youtube Channel")
+```
+
+#3
+
+```{r}
+ggplot(top10_rank, aes(x = reorder(video_title_plot, video_total_views), y = video_total_views)) +
+  geom_col(fill = "#1380A1") +
+  geom_text(aes(label = video_total_views), size = 4) +
+  coord_flip() +
+  theme_ipsum_rc() +
+  scale_color_ipsum() +
+  labs(x = '', 
+       y = "Views",
+       title = "Dead Dogs Songs - Top 10",
+       subtitle = "27/07/2016 - 31/12/2020",
+       caption = "Source: Dead Dogs YouTube Channel")
+  theme_ipsum_rc(grid="XY") # rallenta tutto
+```
+
+#4
+
+```{r}
+ggplot(top10_rank, aes(x = reorder(video_title_plot, video_total_views), y = video_total_views)) +
+  geom_bar(stat = "identity", fill = "#1380A1") +
+  geom_text(aes(label = video_total_views), size = 4.3, hjust = 1.1, color="white", fontface = "bold") +
+  coord_flip() +
+  theme_ipsum_rc() +
+  scale_color_ipsum() +
+  labs(x = '', 
+       y = "Views",
+       title = "Dead Dogs Songs - Top 10",
+       subtitle = "27/07/2016 - 31/12/2020",
+       caption = "Source: Dead Dogs YouTube Channel")
+```
+
+#5
+
+```{r}
+ggplot(top10_rank, aes(x = reorder(video_title_plot, video_total_views), y = video_total_views)) +
+  geom_col(fill = "#1380A1") +
+  geom_text(aes(label = video_total_views), size = 4, hjust = 1.1, color="white", fontface = "bold") +
+  coord_flip() +
+  theme_classic(base_size = 17) +
+  theme(axis.text.y = element_text(size = 12, face = "bold")) +
+  labs(x = '',
+       y = "Views",
+       title = "Dead Dogs Songs - Top 10",
+       subtitle = "27/07/2016 - 31/12/2020",
+       caption = "Source: Dead Dogs YouTube Channel")
+```
+
+#6
+
+```{r}
+library(bbplot)
+
+ggplot(top10_rank, aes(x = reorder(video_title_plot, video_total_views), y = video_total_views)) +
+  geom_col(fill = "#1380A1") +
+  geom_text(aes(label = video_total_views), position = position_dodge(width=0.9),  size = 5.6) +
+  coord_flip() +
+  bbc_style() +
+  labs(x = '', 
+       y = "Views",
+       title = "Dead Dogs Songs - Top 10",
+       subtitle = "27/07/2016 - 31/12/2020",
+       caption = "Data: Dead Dogs YouTube Channel")
+```
+
+#9 Barchart using highcharter
+
+```{r}
+library(highcharter)
+
+hchart(top10_rank, type = "lollipop", hcaes(x = video_title_plot, y = video_total_views)) %>%
+  hc_chart(inverted = TRUE) 
+
+hchart(top10_rank, "bar", hcaes(video_title_plot, video_total_views)) %>% 
+              hc_colors("SteelBlue") %>% 
+              hc_title(text = "Dead Dogs Songs - Top 10") %>% 
+              # hc_subtitle(text = unique(crime$date)) %>% 
+              hc_xAxis(title = list(text = ""), gridLineWidth = 0, minorGridLineWidth = 0) %>% 
+              hc_yAxis(title = list(text = "Incidents"), gridLineWidth = 0, minorGridLineWidth = 0) %>%
+              hc_legend(enabled = FALSE) %>% 
+              # hc_tooltip(pointFormat = "Incidents: <b>{point.y}</b>") %>% 
+              hc_plotOptions(series = list(cursor = "default")) %>% 
+              hc_add_theme(hc_theme_smpl()) %>% 
+              hc_chart(backgroundColor = "transparent")
+```
+
+#10 Barchart using echarts4r
+
+```{r}
+library(echarts4r)
+
+top10_rank2 %>% 
+  e_charts(video_title_plot) %>% 
+  e_bar(video_total_views, name = "Serie 1") %>% 
+  # e_step(z, name = "Serie 2") %>% 
+  e_title("Bar and step charts")
+```
+
+# Plotting the views history
+
+\#Per la time series comparativa (video o playlists) usare i Linkedin highcharters examples (OTTIMO esempio)
+
+# per rappresentare quali video hanno una incidenza maggiore all'interno della playlist usare uno stackbarchart orizzonale
+
+# calcolato con le percentuali (vedi Linkedin highcharters examples)
+
+# fare si che quando seleziono una linea nel grafico vedo solo quell'informazione in tabella e viceversa (come in tableau)
+
+```{r}
+ggplotly(
+  dat_hist_cum %>% 
+  ggplot(aes(x = views_date, y = video_cum_views, color = video_id)) +
+  geom_line())
+
+ggplotly(
+  playlists_videos_hist_cum %>% 
+  ggplot(aes(x = views_date, y = video_cum_views, color = video_title)) +
+  geom_line())
+```
+
+# Plotting the views history - highcharter
+
+```{r}
+library(highcharter)
+library(xts)
+
+hchart(dat_hist_cum, "line", hcaes(x = views_date, y = video_cum_views, group = video_title))
+```
+
+# Plotting the views history - dygraphs
+
+```{r}
+library(xts)
+library(dygraphs)
+
+videos_ts <- xts(playlists_videos_hist_cum$video_daily_views, order.by = playlists_videos_hist_cum$views_date)
+
+videos_ts <- xts(playlists_videos_hist_cum$video_cum_views, order.by = playlists_videos_hist_cum$views_date)
+
+
+
+
+
+
+dygraph(videos_ts, main = "Whole Lotta Shakin' Goin' On Views") %>% 
+  dyRangeSelector(height = 20, strokeColor = "") %>% 
+  dyOptions(colors = RColorBrewer::brewer.pal(3, "Set2"))
+
+dygraph(videos_ts, main = "Whole Lotta Shakin' Goin' On Views") %>% 
+  dyRangeSelector(height = 20, strokeColor = "") %>% 
+  dyOptions(fillGraph = TRUE, fillAlpha = 0.4)
+
+dygraph(videos_ts, main = "Whole Lotta Shakin' Goin' On Views") %>% 
+  dyRangeSelector(height = 20, strokeColor = "") %>% 
+dyHighlight(highlightCircleSize = 5, 
+              highlightSeriesBackgroundAlpha = 0.2,
+              hideOnMouseOut = FALSE)
+
+dygraph(videos_ts, main = "Whole Lotta Shakin' Goin' On Views") %>% 
+  dyRangeSelector(height = 20, strokeColor = "") %>% 
+dyHighlight(highlightSeriesOpts = list(strokeWidth = 3))
+```
+
+## ggplot2 - Line plot animated
+
+```{r}
+library(gganimate)
+
+p <- ggplot(data = playlists_videos_hist_cum, aes(x = views_date, y = video_cum_views, color = video_id)) +
+      geom_line()
+
+animate(p, fps = 60)
+
+, duration = 30, width = 1440, height = 900, res = 200, end_pause = 25)
+```
+

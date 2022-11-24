@@ -1,0 +1,68 @@
+---
+title: "Lollipop"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(stringr)
+library(hrbrthemes)
+```
+
+```{r}
+df = data.frame(x = c("Highway To Hell (AC/DC Cover) - Dead Dogs 2019 Christmas Party", 
+                      "You Shook Me All Night Long (AC/DC Cover) - Dead Dogs 2019 Christmas Party",
+                      "Are You Gonna Be My Girl (Jet Cover) - Dead Dogs 2017 Rehearsals"), 
+                y = c(10, 15, 20))
+df
+
+glimpse(df)
+
+df2 <- df %>% 
+  mutate(x2 = fct_reorder(x,y))
+
+glimpse(df2)
+```
+
+```{r}
+ggplot(df, aes(x, y)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+```
+
+```{r}
+ggplot(df, aes(reorder(x, y), y)) + 
+ geom_col()+
+  coord_flip()
+```
+
+```{r}
+# funziona
+ggplot(df2, aes(x=x, y=y)) + 
+   geom_segment(aes(x=x2, xend=x2,y=0,yend=y), color = "#1380A1", size = 1) +
+   geom_point(color = "#FAAB18", size = 3.5, alpha= 2) +
+    geom_text(aes(label=y, size = 2, hjust= -0.5)) +
+   coord_flip() +
+  # Layout Tuning
+  theme_minimal() +
+  ggtitle("Dead Dogs Top 10") +
+  xlab("") +
+  ylab("views") +
+  theme(plot.title = element_text(color="red", size=14, face="bold.italic", hjust = -1.5),
+        axis.title.x = element_text(colour = "blue"))
+
+```
+
+```{r}
+# non va
+ggplot(df, aes(x=fct_reorder(x,y),y=y)) + 
+ geom_segment(aes(x=x, xend=x,y=0,yend=y), color = "steelblue") +
+ geom_point(color = "orange", size = 4, alpha= 2) +
+ coord_flip() +
+  theme_minimal()
+```
+
